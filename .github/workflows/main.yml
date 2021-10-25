@@ -1,0 +1,27 @@
+name: a
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+  push:
+    branches:
+     - main
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run request script
+        run: |
+          chmod +x ./request.sh
+          ./request.sh
+      
+      - name: Commit
+        uses: test-room-7/action-update-file@v1
+        with:
+            file-path: common.js
+            commit-msg: auto commit
+            github-token: ${{ secrets.TOKEN }}
