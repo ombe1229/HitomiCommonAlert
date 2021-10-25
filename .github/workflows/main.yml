@@ -1,4 +1,4 @@
-name: a
+name: Check
 
 on:
   schedule:
@@ -36,4 +36,4 @@ jobs:
           body: |
             ## Info
 
-            [g](https://github.com/ombe1229/HitomiCommon/commit/${{ steps.commit.outputs.commit-sha }})
+            [Here](https://github.com/ombe1229/HitomiCommon/commit/${{ steps.commit.outputs.commit-sha }})
