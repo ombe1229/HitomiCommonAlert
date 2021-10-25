@@ -27,6 +27,13 @@ jobs:
             commit-msg: "fix(common): auto commit"
             github-token: ${{ secrets.TOKEN }}
       
-      - name: Test
+      - name: Issue
         if: ${{ steps.commit.outputs.commit-sha }}
-        run: echo a
+        uses: actions-ecosystem/action-create-issue@v1
+        with:
+          github_token: ${{ secrets.TOKEN }}
+          title: Hitomi image path changed
+          body: |
+            ## Info
+
+            [g](https://github.com/ombe1229/HitomiCommon/commit/${{ steps.commit.outputs.commit-sha }})
