@@ -28,4 +28,5 @@ jobs:
             github-token: ${{ secrets.TOKEN }}
       
       - name: Test
-        run: echo ${{ steps.commit.outputs.commit-sha }}
+        if: ${{ steps.commit.outputs.commit-sha }}
+        run: echo a
