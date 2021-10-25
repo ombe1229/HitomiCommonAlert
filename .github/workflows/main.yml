@@ -23,5 +23,5 @@ jobs:
         uses: test-room-7/action-update-file@v1
         with:
             file-path: common.js
-            commit-msg: fix(common): auto commit
+            commit-msg: "fix(common): auto commit"
             github-token: ${{ secrets.TOKEN }}
