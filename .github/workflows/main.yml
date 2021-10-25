@@ -36,4 +36,4 @@ jobs:
           body: |
             ## Info
 
-            [Here](https://github.com/ombe1229/HitomiCommon/commit/${{ steps.commit.outputs.commit-sha }})
+            [Here](https://github.com/ombe1229/HitomiCommonAlert/commit/${{ steps.commit.outputs.commit-sha }})
