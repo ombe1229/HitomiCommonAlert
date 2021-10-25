@@ -20,8 +20,12 @@ jobs:
           ./request.sh
       
       - name: Commit
+        id: commit
         uses: test-room-7/action-update-file@v1
         with:
             file-path: common.js
             commit-msg: "fix(common): auto commit"
             github-token: ${{ secrets.TOKEN }}
+      
+      - name: Test
+        run: echo ${{ steps.commit.outputs.commit-sha }}
