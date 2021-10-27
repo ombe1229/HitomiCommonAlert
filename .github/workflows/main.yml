@@ -34,6 +34,4 @@ jobs:
           github_token: ${{ secrets.TOKEN }}
           title: Hitomi image path changed
           body: |
-            ## Info
-
             [Here](https://github.com/ombe1229/HitomiCommonAlert/commit/${{ steps.commit.outputs.commit-sha }})
