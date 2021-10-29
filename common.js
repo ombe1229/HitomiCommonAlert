@@ -30,7 +30,7 @@ function subdomain_from_url(url, base) {
         var g = parseInt(m[1], b);
         if (!isNaN(g)) {
                 var o = 0;
-                if (g < 0x7a) {
+                if (g < 0x7b) {
                         o = 1;
                 }
                 //retval = subdomain_from_galleryid(g, number_of_frontends) + retval;
