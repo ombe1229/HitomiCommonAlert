@@ -154,12 +154,13 @@ $(document).ready(function() {
         localDates();
 });
 
-
-// var cls = 0;
-// const po = new PerformanceObserver((list) => {
-// for (const entry of list.getEntries()) {
-// cls += entry.value;
-// console.log(entry, 'total is now: '+cls);
-// }
-// });
-// po.observe({type: 'layout-shift', buffered: true});
+if (typeof Cookies !== 'undefined' && Cookies && Cookies.get('observe_cls')) {
+        let cls = 0;
+        const po = new PerformanceObserver((list) => {
+                for (const entry of list.getEntries()) {
+                        cls += entry.value;
+                        console.log(entry, 'total is now: '+cls);
+                }
+        });
+        po.observe({type: 'layout-shift', buffered: true});
+}
