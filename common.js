@@ -5,12 +5,7 @@ var domain = (/^dev\./.test(document.location.hostname.toString()) ? 'dev' : 'lt
 var galleryblockextension = '.html';
 var galleryblockdir = 'galleryblock';
 var nozomiextension = '.nozomi';
-
-function subdomain_from_galleryid(g, number_of_frontends) {
-        var o = g % number_of_frontends;
-
-        return String.fromCharCode(97 + o);
-}
+var gg = { m: function(g) { var m = /(.)(..)$/.exec(g.toString(16).padStart(3, '0')); return parseInt(m[2], 16) < 0x7c ? 1 : 0; }, b: '', s: function(h) { var m = /(..)(.)$/.exec(h); return m[2]+'/'+m[1]; } };
 
 function subdomain_from_url(url, base) {
         var retval = 'b';
@@ -18,23 +13,17 @@ function subdomain_from_url(url, base) {
                 retval = base;
         }
         
-        var number_of_frontends = 2;
         var b = 16;
         
-        var r = /\/[0-9a-f]\/([0-9a-f]{2})\//;
+        var r = /\/[0-9a-f]{61}([0-9a-f]{2})([0-9a-f])/;
         var m = r.exec(url);
         if (!m) {
                 return 'a';
         }
         
-        var g = parseInt(m[1], b);
+        var g = parseInt(m[2]+m[1], b);
         if (!isNaN(g)) {
-                var o = 0;
-                if (g < 0x7c) {
-                        o = 1;
-                }
-                //retval = subdomain_from_galleryid(g, number_of_frontends) + retval;
-                retval = String.fromCharCode(97 + o) + retval;
+                retval = String.fromCharCode(97 + gg.m(g)) + retval;
         }
         
         return retval;
@@ -46,9 +35,10 @@ function url_from_url(url, base) {
 
 
 function full_path_from_hash(hash) {
-        if (hash.length < 3) {
-                return hash;
-        }
+        return gg.b+gg.s(hash)+'/'+hash;
+}
+
+function real_full_path_from_hash(hash) {
         return hash.replace(/^.*(..)(.)$/, '$2/$1/'+hash);
 }
 
@@ -61,11 +51,14 @@ function url_from_hash(galleryid, image, dir, ext) {
 }
 
 function url_from_url_from_hash(galleryid, image, dir, ext, base) {
+        if ('tn' === base) {
+                return url_from_url('https://a.hitomi.la/'+dir+'/'+real_full_path_from_hash(image.hash)+'.'+ext, base);
+        }
         return url_from_url(url_from_hash(galleryid, image, dir, ext), base);
 }
 
 function rewrite_tn_paths(html) {
-        return html.replace(/\/\/tn\.hitomi\.la\/[^\/]+\/[0-9a-f]\/[0-9a-f]{2}\//g, function(url) {
+        return html.replace(/\/\/tn\.hitomi\.la\/[^\/]+\/[0-9a-f]\/[0-9a-f]{2}\/[0-9a-f]{64}/g, function(url) {
                 return url_from_url(url, 'tn');
         });
 }
@@ -152,6 +145,12 @@ $(document).ready(function() {
                 $("nav").toggleClass("active");
         });
         localDates();
+
+        var get_gg = function() {
+                $.ajax({dataType: 'script', cache: false, url: '//'+domain+'/gg.js'});
+                setTimeout(get_gg, 1000 * 60 * 30);
+        };
+        get_gg();
 });
 
 if (typeof Cookies !== 'undefined' && Cookies && Cookies.get('observe_cls')) {
