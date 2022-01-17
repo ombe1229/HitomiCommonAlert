@@ -1,1 +1,1 @@
-curl -X GET -H "Content-Type: text/plain" https://ltn.hitomi.la/common.js > common.js
+curl -X GET -H "Referer: https://hitomi.la/" https://ltn.hitomi.la/common.js > common.js
