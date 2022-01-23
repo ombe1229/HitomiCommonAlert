@@ -144,6 +144,11 @@ function flip_lazy_images() {
         });
 }
 
+function is_webtoon_aspect_ratio(width, height) {
+        return (height / width >= 2);
+}
+
+
 
 $(document).ready(function() {
         $("#lang").mouseenter(function() {
